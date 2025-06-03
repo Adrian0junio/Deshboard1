@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { UserCircle, Lock, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
     if (username === 'adrian' && password === 'micro-saas0.1') {
-      // Handle successful login
-      console.log('Login successful');
+      navigate('/dashboard');
     } else {
-      // Handle login error
-      console.log('Invalid credentials');
+      setError('Invalid username or password');
     }
   };
 
@@ -27,6 +30,12 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-700/50">
+          {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+              {error}
+            </div>
+          )}
+          
           <div className="space-y-6">
             <div className="relative">
               <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
