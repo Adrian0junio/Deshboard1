@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DashboardLayout from '../components/layouts/DashboardLayout';
 import MetricCard from '../components/MetricCard';
 import TeamMembersList from '../components/TeamMembersList';
 import ActiveSubscriptions from '../components/ActiveSubscriptions';
 import TutorialCard from '../components/TutorialCard';
-import { HardDrive, Users, Image, UserCircle, Mail, Clock, Star } from 'lucide-react';
+import { HardDrive, Users, Image, UserCircle, Mail, Clock, Star, Zap, BrainCircuit, Inbox } from 'lucide-react';
 
 // Mock data - This would come from your API/database
 const teamMembers = [
@@ -32,15 +32,33 @@ const subscriptions = [
 ];
 
 const Dashboard: React.FC = () => {
+  const [timeRange, setTimeRange] = useState('today');
+
   return (
     <DashboardLayout>
+      <div className="mb-6 flex items-center gap-4">
+        <select 
+          value={timeRange}
+          onChange={(e) => setTimeRange(e.target.value)}
+          className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-600"
+        >
+          <option value="today">Today</option>
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+          <option value="quarter">This Quarter</option>
+        </select>
+        <div className="text-sm text-gray-400">
+          Last updated: {new Date().toLocaleTimeString()}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {/* First row - Key Metrics */}
         <MetricCard 
-          title="Emails Received" 
-          value="127"
-          subtext="Last 24 hours"
-          icon={<Mail size={20} />}
+          title="Emails Processed" 
+          value="1,247"
+          subtext="94% success rate"
+          icon={<BrainCircuit size={20} />}
           trend={{ value: "+12% from yesterday", positive: true }}
         />
         
@@ -53,41 +71,53 @@ const Dashboard: React.FC = () => {
         />
         
         <MetricCard 
-          title="Storage Used" 
-          value="1.2 GB"
-          subtext="10 GB remaining"
-          icon={<HardDrive size={20} />}
+          title="Inbox Load" 
+          value="127"
+          subtext="Emails pending"
+          icon={<Inbox size={20} />}
+          trend={{ value: "+15 new", positive: false }}
         />
         
         <MetricCard 
-          title="Active Workspaces" 
-          value="4"
-          subtext="6 available workspaces"
-          icon={<Users size={20} />}
+          title="AI Performance" 
+          value="98%"
+          subtext="Accuracy rate"
+          icon={<Zap size={20} />}
+          trend={{ value: "+2% improvement", positive: true }}
         />
         
-        {/* Second row - More Metrics */}
+        {/* Second row - Resource Metrics */}
         <MetricCard 
           title="Urgent Emails" 
           value="8"
           subtext="Requires attention"
           icon={<Star size={20} />}
           trend={{ value: "+3 new urgent", positive: false }}
-          className="bg-red-500/10"
+          className="bg-red-500/10 border-red-500/20"
         />
         
         <MetricCard 
-          title="Assets Exported" 
-          value="286"
-          trend={{ value: "+16% from last month", positive: true }}
-          icon={<Image size={20} />}
+          title="Storage Used" 
+          value="1.2 GB"
+          subtext="10 GB remaining"
+          icon={<HardDrive size={20} />}
+          trend={{ value: "12% utilized", positive: true }}
         />
         
         <MetricCard 
           title="Team Members" 
           value="10"
-          trend={{ value: "+2 this month", positive: true }}
+          subtext="4 active now"
           icon={<UserCircle size={20} />}
+          trend={{ value: "+2 this month", positive: true }}
+        />
+
+        <MetricCard 
+          title="Workspaces" 
+          value="4"
+          subtext="6 available"
+          icon={<Users size={20} />}
+          trend={{ value: "67% utilized", positive: true }}
         />
         
         {/* Third row - Subscriptions and Team */}
@@ -103,7 +133,7 @@ const Dashboard: React.FC = () => {
         <div className="lg:col-span-4">
           <TutorialCard 
             title="Getting Started with Email Processing" 
-            description="Learn how to use AI-powered email processing, custom categorization, and urgency detection to streamline your workflow."
+            description="Learn how to use AI-powered email processing, custom categorization, and urgency detection to streamline your workflow. Get tips on optimizing your email management and team collaboration."
           />
         </div>
       </div>
