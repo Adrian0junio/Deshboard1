@@ -1,59 +1,45 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../components/layouts/DashboardLayout';
 import MetricCard from '../components/MetricCard';
-import TeamMembersList from '../components/TeamMembersList';
-import ActiveSubscriptions from '../components/ActiveSubscriptions';
-import TutorialCard from '../components/TutorialCard';
-import { HardDrive, Users, Image, UserCircle, Mail, Clock, Star, Zap, BrainCircuit, Inbox } from 'lucide-react';
-
-// Mock data - This would come from your API/database
-const teamMembers = [
-  { id: '1', name: 'Daniel Cromitch', email: 'dc@paddle.com', initials: 'DC' },
-  { id: '2', name: 'Melissa Lee', email: 'ml@paddle.com', initials: 'ML' },
-  { id: '3', name: 'Jackson Khan', email: 'jk@paddle.com', initials: 'JK' },
-  { id: '4', name: 'Isa Lopez', email: 'il@paddle.com', initials: 'IL' },
-];
-
-const subscriptions = [
-  {
-    id: '1',
-    name: 'Pro Plan',
-    status: 'active',
-    renewDate: 'Mar 15, 2025',
-    price: '$49/mo'
-  },
-  {
-    id: '2',
-    name: 'Team Storage',
-    status: 'active',
-    renewDate: 'Apr 1, 2025',
-    price: '$29/mo'
-  }
-];
+import { BrainCircuit, Clock, Inbox, Zap, Star, HardDrive, UserCircle, Users } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const [timeRange, setTimeRange] = useState('today');
 
+  const timeRanges = [
+    { value: 'today', label: '1D' },
+    { value: 'week', label: '1W' },
+    { value: 'month', label: '1M' },
+    { value: 'quarter', label: '3M' },
+  ];
+
   return (
     <DashboardLayout>
-      <div className="mb-6 flex items-center gap-4">
-        <select 
-          value={timeRange}
-          onChange={(e) => setTimeRange(e.target.value)}
-          className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-600"
-        >
-          <option value="today">Today</option>
-          <option value="week">This Week</option>
-          <option value="month">This Month</option>
-          <option value="quarter">This Quarter</option>
-        </select>
-        <div className="text-sm text-gray-400">
+      <div className="mb-8 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <h2 className="text-xl font-semibold text-gray-800">Overview</h2>
+          <div className="flex bg-gray-100 rounded-full p-1">
+            {timeRanges.map((range) => (
+              <button
+                key={range.value}
+                onClick={() => setTimeRange(range.value)}
+                className={`px-4 py-1 rounded-full text-sm font-medium transition-colors ${
+                  timeRange === range.value
+                    ? 'bg-blue-500 text-white'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {range.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="text-sm text-gray-500">
           Last updated: {new Date().toLocaleTimeString()}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {/* First row - Key Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <MetricCard 
           title="Emails Processed" 
           value="1,247"
@@ -86,14 +72,13 @@ const Dashboard: React.FC = () => {
           trend={{ value: "+2% improvement", positive: true }}
         />
         
-        {/* Second row - Resource Metrics */}
         <MetricCard 
           title="Urgent Emails" 
           value="8"
           subtext="Requires attention"
           icon={<Star size={20} />}
           trend={{ value: "+3 new urgent", positive: false }}
-          className="bg-red-500/10 border-red-500/20"
+          className="border-red-100 bg-red-50"
         />
         
         <MetricCard 
@@ -119,22 +104,29 @@ const Dashboard: React.FC = () => {
           icon={<Users size={20} />}
           trend={{ value: "67% utilized", positive: true }}
         />
-        
-        {/* Third row - Subscriptions and Team */}
-        <div className="lg:col-span-2">
-          <ActiveSubscriptions subscriptions={subscriptions} />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+        {/* Active Subscriptions Section */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-lg font-semibold text-gray-800">Active Subscriptions</h3>
+            <button className="text-sm text-blue-500 hover:text-blue-600">View all</button>
+          </div>
+          <div className="space-y-4">
+            {/* Subscription items would go here */}
+          </div>
         </div>
-        
-        <div className="lg:col-span-2">
-          <TeamMembersList members={teamMembers} />
-        </div>
-        
-        {/* Fourth row - Tutorial */}
-        <div className="lg:col-span-4">
-          <TutorialCard 
-            title="Getting Started with Email Processing" 
-            description="Learn how to use AI-powered email processing, custom categorization, and urgency detection to streamline your workflow. Get tips on optimizing your email management and team collaboration."
-          />
+
+        {/* Team Members Section */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-lg font-semibold text-gray-800">Team Members</h3>
+            <button className="text-sm text-blue-500 hover:text-blue-600">Add member</button>
+          </div>
+          <div className="space-y-4">
+            {/* Team member items would go here */}
+          </div>
         </div>
       </div>
     </DashboardLayout>
