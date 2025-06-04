@@ -22,20 +22,20 @@ const MetricCard: React.FC<MetricCardProps> = ({
   className = '',
 }) => {
   return (
-    <div className={`bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow ${className}`}>
+    <div className={`bg-[#1a1a1a] rounded-xl border border-gray-800 p-6 hover:border-purple-500/30 transition-all ${className}`}>
       <div className="flex justify-between items-start mb-4">
-        <span className="text-gray-500 text-sm font-medium">{title}</span>
-        {icon && <div className="text-gray-400 bg-gray-50 p-2 rounded-lg">{icon}</div>}
+        <span className="text-gray-400 text-sm font-medium">{title}</span>
+        {icon && <div className="text-gray-400 bg-white/5 p-2 rounded-lg">{icon}</div>}
       </div>
       
       <div className="flex flex-col">
-        <span className="text-3xl font-semibold text-gray-900 mb-1">{value}</span>
-        {subtext && <span className="text-gray-500 text-sm">{subtext}</span>}
+        <span className="text-3xl font-semibold text-white mb-1">{value}</span>
+        {subtext && <span className="text-gray-400 text-sm">{subtext}</span>}
         
         {trend && (
           <div className="mt-4 flex items-center">
             <span className={`flex items-center text-sm ${
-              trend.positive ? 'text-green-600' : 'text-red-600'
+              trend.positive ? 'text-green-400' : 'text-red-400'
             }`}>
               {trend.positive ? (
                 <ArrowUp size={16} className="mr-1" />

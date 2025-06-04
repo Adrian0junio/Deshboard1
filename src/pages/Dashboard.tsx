@@ -17,16 +17,16 @@ const Dashboard: React.FC = () => {
     <DashboardLayout>
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-semibold text-gray-800">Overview</h2>
-          <div className="flex bg-gray-100 rounded-full p-1">
+          <h2 className="text-xl font-semibold text-white">Overview</h2>
+          <div className="flex bg-[#1a1a1a] rounded-full p-1">
             {timeRanges.map((range) => (
               <button
                 key={range.value}
                 onClick={() => setTimeRange(range.value)}
                 className={`px-4 py-1 rounded-full text-sm font-medium transition-colors ${
                   timeRange === range.value
-                    ? 'bg-blue-500 text-white'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'bg-purple-600 text-white'
+                    : 'text-gray-400 hover:text-white'
                 }`}
               >
                 {range.label}
@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => {
             ))}
           </div>
         </div>
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-400">
           Last updated: {new Date().toLocaleTimeString()}
         </div>
       </div>
@@ -78,7 +78,7 @@ const Dashboard: React.FC = () => {
           subtext="Requires attention"
           icon={<Star size={20} />}
           trend={{ value: "+3 new urgent", positive: false }}
-          className="border-red-100 bg-red-50"
+          className="border-red-500/20 bg-red-500/5"
         />
         
         <MetricCard 
@@ -108,10 +108,10 @@ const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Active Subscriptions Section */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div className="bg-[#1a1a1a] rounded-xl border border-gray-800 p-6">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-semibold text-gray-800">Active Subscriptions</h3>
-            <button className="text-sm text-blue-500 hover:text-blue-600">View all</button>
+            <h3 className="text-lg font-semibold text-white">Active Subscriptions</h3>
+            <button className="text-sm text-purple-400 hover:text-purple-300">View all</button>
           </div>
           <div className="space-y-4">
             {/* Subscription items would go here */}
@@ -119,10 +119,10 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Team Members Section */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div className="bg-[#1a1a1a] rounded-xl border border-gray-800 p-6">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-semibold text-gray-800">Team Members</h3>
-            <button className="text-sm text-blue-500 hover:text-blue-600">Add member</button>
+            <h3 className="text-lg font-semibold text-white">Team Members</h3>
+            <button className="text-sm text-purple-400 hover:text-purple-300">Add member</button>
           </div>
           <div className="space-y-4">
             {/* Team member items would go here */}
